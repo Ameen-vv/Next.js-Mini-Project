@@ -4,7 +4,7 @@ import {SessionProvider} from 'next-auth/react'
 
 type childComponents = {
   children:React.ReactNode,
-  session:any
+  session?:any
 }
 
 const Provider:React.FC<childComponents> = ({children, session}) => {

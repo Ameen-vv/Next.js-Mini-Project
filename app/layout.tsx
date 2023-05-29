@@ -1,4 +1,5 @@
 import NavBar from '@components/NavBar'
+import Provider from '@components/Provider'
 import '@styles/global.css'
 
 export const metadata = {
@@ -13,6 +14,7 @@ const MainLayout : React.FC<childComponents> = ({children}) => {
   return (
     <html lang='en'>
         <body>
+            <Provider>
             <div className="main">
                 <div className="gradient"></div>
             </div>
@@ -20,6 +22,7 @@ const MainLayout : React.FC<childComponents> = ({children}) => {
                 <NavBar/>
                 {children}
             </main>
+            </Provider>
         </body>
     </html>
   )

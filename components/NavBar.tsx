@@ -6,17 +6,17 @@ import { useEffect, useState } from "react"
 
 const NavBar: React.FC = () => {
 
-    const [userLogged, setUserLogged] = useState<boolean>(true)
+    const { data : session  } = useSession()
     const [providers, setProviders] = useState(null)
     const [dropDown,setDropDown] = useState<boolean>(false)
 
     useEffect(() => {
-        const setProviders = async () => {
+        const setUpProviders = async () => {
             const response = await getProviders()
 
             setProviders(response)
         }
-        setProviders();
+        setUpProviders();
     }, [])
 
 
@@ -29,7 +29,7 @@ const NavBar: React.FC = () => {
             </Link>
             <div className="sm:flex hidden">
                 {
-                    userLogged ? (
+                    session?.user ? (
                         <div className="flex gap-3 md:gap-5">
                             <Link href='/create-prompt' className="black_btn">
                                 create post
@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
 
                             <Link href='/profile'>
                                 <Image
-                                    src='/assets/images/logo.svg'
+                                    src={session?.user?.image}
                                     width={36}
                                     height={36}
                                     className="rounded-full"
@@ -70,11 +70,12 @@ const NavBar: React.FC = () => {
                     )
                 }
             </div>
+            {/*/mobile nav*/}
             <div className="sm:hidden flex relative">
-                {userLogged ? (
+                {session?.user ? (
                     <div className="flex">
                         <Image
-                            src='/assets/images/logo.svg'
+                            src={session?.user?.image}
                             width={36}
                             height={36}
                             className="rounded-full"
