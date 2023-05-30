@@ -1,8 +1,8 @@
 import {connectDB} from '@util/db'
 import Prompt from '@model/promptSchema'
+import { NextApiHandler } from 'next'
 
-
-export const GET = async (req,{params}) => {
+export const GET:NextApiHandler = async (req,{params}) => {
     try{
         connectDB()
         const prompt = await Prompt.findById(params.id).populate('creator')
@@ -13,24 +13,49 @@ export const GET = async (req,{params}) => {
     }
 }
 
-export const PATCH = async (req,{params}) => {
+export const PATCH:NextApiHandler = async (request, { params }) => {
+    const { prompt, tag } = await request.json();
+
+    try {
+        await connectDB();
+
+        // Find the existing prompt by ID
+        const existingPrompt = await Prompt.findById(params.id);
+
+        if (!existingPrompt) {
+            return new Response("Prompt not found", { status: 404 });
+        }
+
+        // Update the prompt with new data
+        existingPrompt.prompt = prompt;
+        existingPrompt.tag = tag;
+
+        await existingPrompt.save();
+
+        return new Response("Successfully updated the Prompts", { status: 200 });
+    } catch (error) {
+        return new Response("Error Updating Prompt", { status: 500 });
+    }
+};
+export const POST:NextApiHandler = async (req,{params}) => {
     try{
         connectDB()
-        Prompt.updateOne({_id:params.id}).then((response)=>{
+        const {prompt,tag} = await req.json()
+        await Prompt.updateOne({_id:params.id},{$set:{prompt,tag}}).then((response)=>{
+            console.log(response.acknowledged,'sd')
             if(response.acknowledged){
                 return new Response('updated',{status:200})
             }else{
                 return new Response('prompt not found',{status:404})
             }
         })
-    }
-    catch{
-        return new Response('Server Error',{status:500})
+    }catch(err){
+        return new Response("error",{status:500})
     }
 }
 
 
-export const DELETE = async(req,{params}) => {
+export const DELETE:NextApiHandler = async(req,{params}) => {
     try{
         connectDB()
 

@@ -10,7 +10,7 @@ export const POST = async (req:NextApiRequest,res:NextApiResponse) =>{
         await connectDB()
         console.log('2')
         const newPrompt = new Prompt({
-            creater:userId,
+            creator:userId,
             tag:tag,
             prompt
 
