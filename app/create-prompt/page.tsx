@@ -37,8 +37,13 @@ const page : React.FC = () => {
                 tag:post.tag
             })
         })
+
+        response.ok && router.push('/') 
     }catch(err){
         console.log(err)
+    }
+    finally{
+      setSubmit(false)
     }
   }
 
