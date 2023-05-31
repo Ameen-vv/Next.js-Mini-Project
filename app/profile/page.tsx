@@ -3,8 +3,10 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {toast} from 'react-hot-toast'
 
 import Profile from "@components/Profile";
+import { Toaster } from "react-hot-toast";
 
 const MyProfile:React.FC = () => {
   const router = useRouter();
@@ -12,11 +14,15 @@ const MyProfile:React.FC = () => {
 
   const [myPosts, setMyPosts] = useState([]);
 
+  useEffect(()=>{
+    !session?.user && toast.error('please Sign In')
+    !session?.user && router.push('/')
+  },[session?.user])
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
-      console.log('asd')
-      console.log(JSON.stringify(response))
+
       const data = await response.json();
 
       setMyPosts(data);

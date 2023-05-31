@@ -1,8 +1,9 @@
 'use client'
-import {FormEventHandler, useState} from 'react'
+import {FormEventHandler, useEffect, useState} from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Form from '@components/Form'
+import {toast} from 'react-hot-toast'
 
 
 
@@ -24,7 +25,14 @@ const page : React.FC = () => {
     prompt:'',
     tag:''
   })
-  
+
+
+  useEffect(()=>{
+    !session?.user && toast.error('please Sign In')
+    !session?.user && router.push('/')
+  },[session?.user])
+
+
   const createPrompt:FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
     setSubmit(true)

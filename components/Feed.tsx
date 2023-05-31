@@ -56,7 +56,7 @@ const Feed : React.FC = () => {
     const regex = new RegExp(searchtext, "i"); 
     return allPosts.filter(
       (item) =>
-        regex.test(item.creator.userName) ||
+        regex.test(item.creator?.userName) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
     );
