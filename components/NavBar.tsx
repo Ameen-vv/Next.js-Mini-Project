@@ -25,7 +25,7 @@ const NavBar: React.FC = () => {
         <nav className="flex-between w-full mb-16 pt-3">
             <Link href='/' className="flex gap-2 flex-center">
                 <Image src='/assets/images/logo.svg' alt="LOGO" width={30} height={30} className="object-contain" />
-                <p className="logo_text">Heading</p>
+                <p className="logo_text">Prompts</p>
             </Link>
             <div className="sm:flex hidden">
                 {

@@ -4,8 +4,7 @@ import {Toaster} from 'react-hot-toast'
 import '@styles/global.css'
 
 export const metadata = {
-    title:'Mini Project',
-    description:'this is a mini project using react'
+    title:'Prompts',
 }
 type childComponents = {
     children: React.ReactNode

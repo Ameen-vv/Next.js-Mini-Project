@@ -17,7 +17,7 @@ export const PATCH:NextApiHandler = async (request, { params }) => {
     const { prompt, tag } = await request.json();
 
     try {
-        await connectDB();
+         connectDB();
 
         const existingPrompt = await Prompt.findById(params.id);
 
@@ -56,7 +56,6 @@ export const POST:NextApiHandler = async (req,{params}) => {
 export const DELETE:NextApiHandler = async(req,{params}) => {
     try{
         connectDB()
-
         await Prompt.findByIdAndRemove(params.id)
         return new Response("deleted",{status:200})
     }catch(err){
